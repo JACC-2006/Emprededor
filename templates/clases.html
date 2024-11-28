@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Clases y Tareas Pendientes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Estilo del encabezado rojo */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #800000; /* Color rojo */
+            padding: 10px 20px;
+            color: white;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .logo span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .nav-links a:hover {
+            background-color: #660000; /* Un tono más oscuro al pasar el mouse */
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos de los encabezados */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #800000;
+            padding-bottom: 5px;
+        }
+
+        /* Estilos de las tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #800000; /* Color del encabezado de tabla */
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .task-status {
+            font-weight: bold;
+        }
+        .pending {
+            color: red;
+        }
+        .completed {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabecera Roja con Logo y Navegación -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='media/logo-FISI.png') }}" alt="Logo de la Facultad">
+            <span>FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('home_estudiante') }}">Inicio</a>
+      <a href="{{ url_for('clases') }}">Clases</a>
+      <a href="{{ url_for('drive') }}">Materiales</a>
+      <a href="{{ url_for('reclamo') }}">Reclamo</a>
+      <a href="{{ url_for('tareas') }}">Tareas</a>
+      <a href="{{ url_for('biblioteca') }}">Biblioteca</a>
+      <a href="{{ url_for('perfil') }}">Perfil</a>
+      <a href="{{ url_for('reservas') }}">Reservas</a>
+      <a href="{{ url_for('login') }}">Salir</a>
+        </nav>
+    </header>
+
+    <!-- Contenido Principal -->
+    <div class="container">
+        <h1>Listado de Clases y Tareas Pendientes</h1>
+
+        <!-- Sección de Clases -->
+        <h2>Clases</h2>
+        <table>
+            <tr>
+                <th>Clase</th>
+                <th>Profesor</th>
+                <th>Horario</th>
+            </tr>
+            <tr>
+                <td>Redacción y Técnicas de Comunicación</td>
+                <td>Prof. Pérez</td>
+                <td>Lunes y Miércoles, 10:00 - 11:30</td>
+            </tr>
+            <tr>
+                <td>Investigación Formativa</td>
+                <td>Prof. García</td>
+                <td>Martes y Jueves, 09:00 - 10:30</td>
+            </tr>
+            <tr>
+                <td>Realidad Nacional y Mundial</td>
+                <td>Prof. Rodríguez</td>
+                <td>Viernes, 08:00 - 10:00</td>
+            </tr>
+        </table>
+
+        <!-- Sección de Tareas Pendientes -->
+        <h2>Tareas Pendientes</h2>
+        <table>
+            <tr>
+                <th>Tarea</th>
+                <th>Clase</th>
+                <th>Fecha de Entrega</th>
+                <th>Estado</th>
+            </tr>
+            <tr>
+                <td>Ensayo sobre comunicación efectiva</td>
+                <td>Redacción y Técnicas de Comunicación</td>
+                <td>01/11/2024</td>
+                <td class="task-status pending">Pendiente</td>
+            </tr>
+            <tr>
+                <td>Presentación de investigación</td>
+                <td>Investigación Formativa</td>
+                <td>05/11/2024</td>
+                <td class="task-status pending">Pendiente</td>
+            </tr>
+            <tr>
+                <td>Lectura del libro "Realidad Mundial"</td>
+                <td>Realidad Nacional y Mundial</td>
+                <td>10/11/2024</td>
+                <td class="task-status completed">Completado</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Estudiante Universitario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Encabezado rojo con logo y navegación */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #800000; /* Color rojo */
+            padding: 15px 30px;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        .logo span {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: #660000; /* Un tono más oscuro al pasar el mouse */
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        /* Estilos de los encabezados */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #800000;
+            margin-bottom: 10px;
+        }
+
+        /* Sección del perfil */
+        .profile-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .profile-picture {
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+        .profile-info p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .profile-section ul {
+            margin-top: 10px;
+            padding-left: 20px;
+            list-style: inside;
+        }
+        a {
+            color: #800000;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabecera Roja con Logo y Navegación -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='media/logo-FISI.png') }}" alt="Logo de la Facultad">
+            <span>FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{{url_for('home_profesor')}}">Inicio</a>
+            <a href="{{url_for('horarios')}}">Gestion de horarios</a>
+            <a href="{{url_for('reclamos1')}}">Reclamo</a>
+            <a href="{{url_for('perfil_profesor')}}">Perfil</a>
+            <a href="{{url_for('herramientas')}}">Herramientas</a>
+            <a href="{{url_for('reportes')}}">Proyectos</a>
+            <a href="{{url_for('login')}}">Salir</a>
+        </nav>
+    </header>
+
+    <!-- Contenido Principal -->
+    <div class="container">
+        <h1>Perfil del Profesor Universitario</h1>
+
+        <!-- Información Personal -->
+        <section class="profile-section">
+            <div class="profile-header">
+                <img class="profile-picture" src="{{ url_for('static', filename='media/123.jpg') }}" alt="Foto de Marco Barrios">
+                <div class="profile-info">
+                    <p><strong>Nombre:</strong> Isidro Cancho</p>
+                    <p><strong>Edad:</strong> 49 años</p>
+                    <p><strong>Universidad:</strong> Universidad Nacional de San Marcos</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detalles Académicos -->
+        <section class="profile-section">
+            <h2>Detalles Académicos</h2>
+            <p><strong>Carrera</strong> Matematica</p>
+            <p><strong>Cursos que dicta:</strong></p>
+            <ul>
+                <li>Cálculo II</li>
+                <li>Fisica</li>
+            </ul>
+        </section>
+
+        <!-- Intereses y Actividades Extracurriculares -->
+
+
+        <!-- Contactos -->
+        <section class="profile-section">
+            <h2>Contactos</h2>
+            <p><strong>Email:</strong> <a href="mailto:marco.unmsm@gmail.com"><i class="fas fa-envelope"></i> marco.unmsm@gmail.com</a></p>
+            <p><strong>Teléfono:</strong> <a href="tel:+516666666"><i class="fas fa-phone-alt"></i> +51 6666666</a></p>
+            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/marco" target="_blank"><i class="fab fa-linkedin"></i> linkedin.com/in/marco</a></p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Facultad de Ingeniería de Sistemas e Informática, UNMSM. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

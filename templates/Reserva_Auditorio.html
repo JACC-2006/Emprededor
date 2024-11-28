@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Reservas</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <style>
+        /* Estilos */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #800000;
+            padding: 10px 20px;
+            color: white;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .logo span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .calendar-container {
+            padding: 20px;
+        }
+        .modal, .cancel-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            z-index: 1000;
+            text-align: center;
+        }
+        .modal.active, .cancel-modal.active {
+            display: block;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 900;
+        }
+        .overlay.active {
+            display: block;
+        }
+        .modal button, .cancel-modal button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='media/logo-FISI.png') }}" alt="Logo de la Facultad">
+            <span>FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('home_estudiante') }}">Inicio</a>
+      <a href="{{ url_for('clases') }}">Clases</a>
+      <a href="{{ url_for('drive') }}">Materiales</a>
+      <a href="{{ url_for('reclamo') }}">Reclamo</a>
+      <a href="{{ url_for('tareas') }}">Tareas</a>
+      <a href="{{ url_for('biblioteca') }}">Biblioteca</a>
+      <a href="{{ url_for('perfil') }}">Perfil</a>
+      <a href="{{ url_for('reservas') }}">Reservas</a>
+      <a href="{{ url_for('login') }}">Salir</a>
+        </nav>
+    </header>
+
+    <div class="calendar-container">
+        <h2>Calendario de Reservas</h2>
+        <div id="calendar"></div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Modal para añadir reservas -->
+    <div class="modal" id="modal">
+        <h3>Reservar espacio</h3>
+        <p id="selected-date"></p>
+        <label for="time">Hora de reserva:</label>
+        <input type="time" id="time" style="margin-top: 10px; padding: 5px; width: 100%; box-sizing: border-box;">
+        <button onclick="saveReservation()">Reservar</button>
+        <button onclick="closeModal()">Cancelar</button>
+    </div>
+
+    <!-- Modal de confirmación de cancelación -->
+    <div class="cancel-modal" id="cancelModal">
+        <h3>¿Cancelar esta reserva?</h3>
+        <button onclick="confirmDelete()">Sí, cancelar</button>
+        <button onclick="closeCancelModal()">No, mantener</button>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+    <div style="text-align: center; margin-top: 20px;">
+            <button onclick="clearReservations()">Eliminar todas las reservas</button>
+        </div>
+</div>
+
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calendarEl = document.getElementById('calendar');
+        const modal = document.getElementById('modal');
+        const overlay = document.getElementById('overlay');
+        const cancelModal = document.getElementById('cancelModal');
+        const selectedDateText = document.getElementById('selected-date');
+        const timeInput = document.getElementById('time');
+        let selectedDate = '';
+        let selectedEvent = null;
+
+        // Fecha actual
+        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'es',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,dayGridWeek'
+            },
+            // Establece la fecha mínima para la selección del calendario
+            minDate: today,
+
+            dateClick: function(info) {
+                selectedDate = info.dateStr;
+
+                // Comprobamos si la fecha seleccionada es anterior a la fecha actual
+                if (selectedDate < today) {
+                    alert("No puedes reservar para una fecha anterior a la actual.");
+                    return;
+                }
+
+                selectedDateText.textContent = `Fecha seleccionada: ${selectedDate}`;
+                modal.classList.add('active');
+                overlay.classList.add('active');
+            },
+            eventClick: function(info) {
+                selectedEvent = info.event;
+                cancelModal.classList.add('active');
+                overlay.classList.add('active');
+            },
+            events: JSON.parse(localStorage.getItem('reservations')) || []
+
+        });
+
+        calendar.render();
+
+        function closeModal() {
+            modal.classList.remove('active');
+            overlay.classList.remove('active');
+            timeInput.value = '';
+        }
+
+        function closeCancelModal() {
+            cancelModal.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function saveReservation() {
+            const time = timeInput.value;
+            if (!time) {
+                alert("Por favor, selecciona una hora.");
+                return;
+            }
+
+            const eventTitle = `Reserva de auditorio`;
+            const eventId = `event-${Date.now()}`; // Generar un ID único basado en el tiempo actual
+
+            const newEvent = {
+                id: eventId,
+                title: eventTitle,
+                start: selectedDate + 'T' + time,
+                allDay: false
+            };
+            calendar.addEvent(newEvent);
+
+            let reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+            reservations.push(newEvent);
+            localStorage.setItem('reservations', JSON.stringify(reservations));
+
+            alert(`Reserva realizada para el ${selectedDate} a las ${time}`);
+            closeModal();
+        }
+
+        function clearReservations() {
+            // Eliminar todas las reservas del localStorage
+            localStorage.removeItem('reservations');
+
+            // Refrescar el calendario para eliminar eventos
+            calendar.getEvents().forEach(event => event.remove());
+
+            alert("Todas las reservas han sido eliminadas.");
+        }
+
+        function confirmDelete() {
+            if (selectedEvent) {
+                // Remover el evento del calendario
+                selectedEvent.remove();
+
+                // Obtener reservas actuales del localStorage
+                let reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+
+                // Filtrar las reservas para eliminar el evento cancelado por ID
+                reservations = reservations.filter(event => event.id !== selectedEvent.id);
+
+                // Guardar el arreglo actualizado en localStorage
+                localStorage.setItem('reservations', JSON.stringify(reservations));
+
+                alert("Reserva cancelada");
+                closeCancelModal();
+            }
+        }
+
+        overlay.onclick = function () {
+            closeModal();
+            closeCancelModal();
+        };
+
+        window.saveReservation = saveReservation;
+        window.closeModal = closeModal;
+        window.closeCancelModal = closeCancelModal;
+        window.confirmDelete = confirmDelete;
+    });
+</script>
+</body>
+</html>
+
+

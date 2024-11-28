@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiales de Clase en Google Drive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Estilo del encabezado rojo */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #800000; /* Color rojo */
+            padding: 10px 20px;
+            color: white;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .logo span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .nav-links a:hover {
+            background-color: #660000; /* Un tono más oscuro al pasar el mouse */
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos de los encabezados */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #800000;
+            padding-bottom: 5px;
+        }
+
+        /* Estilos de las tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #800000; /* Color del encabezado de tabla */
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Estilos para los enlaces */
+        a {
+            color: #800000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabecera Roja con Logo y Navegación -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='media/logo-FISI.png') }}" alt="Logo de la Facultad">
+            <span>FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('home_estudiante') }}">Inicio</a>
+      <a href="{{ url_for('clases') }}">Clases</a>
+      <a href="{{ url_for('drive') }}">Materiales</a>
+      <a href="{{ url_for('reclamo') }}">Reclamo</a>
+      <a href="{{ url_for('tareas') }}">Tareas</a>
+      <a href="{{ url_for('biblioteca') }}">Biblioteca</a>
+      <a href="{{ url_for('perfil') }}">Perfil</a>
+      <a href="{{ url_for('reservas') }}">Reservas</a>
+      <a href="{{ url_for('login') }}">Salir</a>
+        </nav>
+    </header>
+
+    <!-- Contenido Principal -->
+    <div class="container">
+        <h1>Materiales de Clase en Google Drive</h1>
+
+        <!-- Materiales de Redacción y Técnicas de Comunicación -->
+        <h2>Redacción y Técnicas de Comunicación</h2>
+        <table>
+            <tr>
+                <th>Semana</th>
+                <th>Material</th>
+            </tr>
+            <tr>
+                <td>Semana 1</td>
+                <td><a href="https://drive.google.com/link_a_material1">Introducción a la Redacción</a></td>
+            </tr>
+            <tr>
+                <td>Semana 2</td>
+                <td><a href="https://drive.google.com/link_a_material2">Técnicas de Comunicación</a></td>
+            </tr>
+            <tr>
+                <td>Semana 3</td>
+                <td><a href="https://drive.google.com/link_a_material3">Ejercicios Prácticos</a></td>
+            </tr>
+        </table>
+
+        <!-- Materiales de Investigación Formativa -->
+        <h2>Investigación Formativa</h2>
+        <table>
+            <tr>
+                <th>Semana</th>
+                <th>Material</th>
+            </tr>
+            <tr>
+                <td>Semana 1</td>
+                <td><a href="https://drive.google.com/link_a_material4">Metodología de la Investigación</a></td>
+            </tr>
+            <tr>
+                <td>Semana 2</td>
+                <td><a href="https://drive.google.com/link_a_material5">Técnicas de Recolección de Datos</a></td>
+            </tr>
+            <tr>
+                <td>Semana 3</td>
+                <td><a href="https://drive.google.com/link_a_material6">Análisis de Datos</a></td>
+            </tr>
+        </table>
+
+        <!-- Materiales de Realidad Nacional y Mundial -->
+        <h2>Realidad Nacional y Mundial</h2>
+        <table>
+            <tr>
+                <th>Semana</th>
+                <th>Material</th>
+            </tr>
+            <tr>
+                <td>Semana 1</td>
+                <td><a href="https://drive.google.com/link_a_material7">Introducción a la Realidad Nacional</a></td>
+            </tr>
+            <tr>
+                <td>Semana 2</td>
+                <td><a href="https://drive.google.com/link_a_material8">Análisis de Casos</a></td>
+            </tr>
+            <tr>
+                <td>Semana 3</td>
+                <td><a href="https://drive.google.com/link_a_material9">Debate sobre Realidad Mundial</a></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

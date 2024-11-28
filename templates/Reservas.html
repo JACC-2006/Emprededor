@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservas FISI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+    }
+    /* Estilos de la cabecera */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #800000; /* Color rojo */
+      padding: 10px 20px;
+      color: white;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    .logo img {
+      height: 40px; /* Ajusta la altura del logo */
+      margin-right: 10px;
+    }
+    .logo span {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px; /* Espacio entre enlaces */
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+    .nav-links a:hover {
+      background-color: #660000; /* Un tono más oscuro al pasar el mouse */
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1600px;
+      margin: 20px auto;
+    }
+    .card {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 20px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #333;
+      color: white;
+      height: 300px;
+      display: flex;
+      align-items: center;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4); /* Oscurece la imagen */
+      z-index: 1;
+    }
+
+    .card-content {
+      position: absolute;
+      z-index: 2; /* Coloca el contenido sobre el overlay */
+      right: 20px;
+      color: white;
+      text-align: left;
+      background-color: rgba(0, 0, 0, 0.6); /* Fondo para mejorar legibilidad */
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .card-content h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .card-content p {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    .reserve-button {
+      padding: 10px 20px;
+      background-color: #fff;
+      color: #333;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .reserve-button:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabecera Roja con Logo y Navegación -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='media/logo-FISI.png') }}" alt="Logo de la Facultad">
+      <span>FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA</span>
+    </div>
+    <nav class="nav-links">
+      <a href="{{ url_for('home_estudiante') }}">Inicio</a>
+      <a href="{{ url_for('clases') }}">Clases</a>
+      <a href="{{ url_for('drive') }}">Materiales</a>
+      <a href="{{ url_for('reclamo') }}">Reclamo</a>
+      <a href="{{ url_for('tareas') }}">Tareas</a>
+      <a href="{{ url_for('biblioteca') }}">Biblioteca</a>
+      <a href="{{ url_for('perfil') }}">Perfil</a>
+      <a href="{{ url_for('reservas') }}">Reservas</a>
+      <a href="{{ url_for('login') }}">Salir</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Tarjeta de Reserva de Auditorio -->
+    <div class="card">
+      <div class="overlay"></div>
+      <img src="{{ url_for('static', filename='images/auditorio.jpg') }}" alt="Auditorio">
+      <div class="card-content">
+        <h2>Reserva de Auditorio</h2>
+        <p>Reserva el auditorio de la FISI para tus eventos y presentaciones.</p>
+        <a href="{{ url_for('Reserva_auditorio') }}" class="reserve-button">Reservar</a>
+      </div>
+    </div>
+
+    <!-- Tarjeta de Reserva de Canchita -->
+    <div class="card">
+      <div class="overlay"></div>
+      <img src="{{ url_for('static', filename='images/cancha.jpg') }}" alt="Cancha de Fútbol">
+      <div class="card-content">
+        <h2>Reserva de Canchita</h2>
+        <p>Reserva la cancha sintética de la FISI para tus partidos.</p>
+        <a href="{{ url_for('Reserva_canchita') }}" class="reserve-button">Reservar</a>
+      </div>
+    </div>
+
+    <!-- Tarjeta de Reserva de Salones -->
+    <div class="card">
+      <div class="overlay"></div>
+      <img src="{{ url_for('static', filename='images/salones.jpeg') }}" alt="Salones">
+      <div class="card-content">
+        <h2>Reserva de Salones</h2>
+        <p>Reserva un salón de la FISI para tus clases o reuniones.</p>
+        <a href="{{ url_for('Reserva_salones') }}" class="reserve-button">Reservar</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

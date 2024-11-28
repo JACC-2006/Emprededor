@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas Avanzadas para Profesores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Encabezado */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #800000;
+            padding: 1rem 2rem;
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo span {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #660000;
+        }
+
+        main {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            color: #800000;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        input[type="text"], input[type="date"], select, textarea {
+            padding: 0.5rem;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 0.5rem;
+        }
+
+        button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #800000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #660000;
+        }
+
+        .result, .success-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #800000;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='media/logo-FISI.png') }}" alt="Logo de la Facultad">
+            <span>FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{{url_for('home_profesor')}}">Inicio</a>
+            <a href="{{url_for('horarios')}}">Gestion de horarios</a>
+            <a href="{{url_for('reclamos1')}}">Reclamo</a>
+            <a href="{{url_for('perfil_profesor')}}">Perfil</a>
+            <a href="{{url_for('herramientas')}}">Herramientas</a>
+            <a href="{{url_for('reportes')}}">Proyectos</a>
+            <a href="{{url_for('login')}}">Salir</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Generador de Horarios -->
+        <section>
+            <h2>Generador de Horarios</h2>
+            <p>Organiza tus clases semanales.</p>
+            <label for="day">Día de la semana:</label>
+            <select id="day">
+                <option value="Lunes">Lunes</option>
+                <option value="Martes">Martes</option>
+                <option value="Miércoles">Miércoles</option>
+                <option value="Jueves">Jueves</option>
+                <option value="Viernes">Viernes</option>
+            </select>
+
+            <label for="time">Hora (Ejemplo: 10:00 AM - 12:00 PM):</label>
+            <input type="text" id="time" placeholder="Ingresa el horario de la clase">
+
+            <label for="subject">Materia:</label>
+            <input type="text" id="subject" placeholder="Ejemplo: Matemáticas">
+
+            <button onclick="addSchedule()">Agregar al Horario</button>
+
+            <table id="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora</th>
+                        <th>Materia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Gestor de Asistencia -->
+        <section>
+            <h2>Gestor de Asistencia</h2>
+            <p>Registra la asistencia de tus estudiantes.</p>
+            <label for="student-name">Nombre del estudiante:</label>
+            <input type="text" id="student-name" placeholder="Ejemplo: Juan Pérez">
+
+            <label for="attendance-date">Fecha:</label>
+            <input type="date" id="attendance-date">
+
+            <label for="attendance-status">Estado de asistencia:</label>
+            <select id="attendance-status">
+                <option value="Presente">Presente</option>
+                <option value="Ausente">Ausente</option>
+                <option value="Tarde">Tarde</option>
+            </select>
+
+            <button onclick="addAttendance()">Registrar Asistencia</button>
+
+            <table id="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Herramienta para Asignar Tareas -->
+        <section>
+            <h2>Asignación de Tareas</h2>
+            <p>Asigna tareas a tus estudiantes con fecha de entrega.</p>
+            <label for="task-title">Título de la tarea:</label>
+            <input type="text" id="task-title" placeholder="Ejemplo: Resolver ejercicios del libro">
+
+            <label for="task-details">Descripción:</label>
+            <textarea id="task-details" rows="4" placeholder="Detalles de la tarea"></textarea>
+
+            <label for="due-date">Fecha de entrega:</label>
+            <input type="date" id="due-date">
+
+            <button onclick="assignTask()">Asignar Tarea</button>
+
+            <div id="task-result" class="success-message"></div>
+        </section>
+    </main>
+
+    <script>
+        // Generador de Horarios
+        function addSchedule() {
+            const day = document.getElementById("day").value;
+            const time = document.getElementById("time").value.trim();
+            const subject = document.getElementById("subject").value.trim();
+
+            if (!time || !subject) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            const tableBody = document.querySelector("#schedule-table tbody");
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `<td>${day}</td><td>${time}</td><td>${subject}</td>`;
+            tableBody.appendChild(newRow);
+
+            document.getElementById("time").value = "";
+            document.getElementById("subject").value = "";
+        }
+
+        // Gestor de Asistencia
+        function addAttendance() {
+            const name = document.getElementById("student-name").value.trim();
+            const date = document.getElementById("attendance-date").value;
+            const status = document.getElementById("attendance-status").value;
+
+            if (!name || !date) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            const tableBody = document.querySelector("#attendance-table tbody");
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `<td>${name}</td><td>${date}</td><td>${status}</td>`;
+            tableBody.appendChild(newRow);
+
+            document.getElementById("student-name").value = "";
+            document.getElementById("attendance-date").value = "";
+        }
+
+        // Asignación de Tareas
+        function assignTask() {
+            const title = document.getElementById("task-title").value.trim();
+            const details = document.getElementById("task-details").value.trim();
+            const dueDate = document.getElementById("due-date").value;
+
+            if (!title || !details || !dueDate) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            document.getElementById("task-result").innerHTML = `Tarea asignada: <strong>${title}</strong> con fecha de entrega <strong>${dueDate}</strong>.`;
+            document.getElementById("task-title").value = "";
+            document.getElementById("task-details").value = "";
+            document.getElementById("due-date").value = "";
+        }
+    </script>
+</body>
+</html>

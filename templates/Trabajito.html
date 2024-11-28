@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Profesor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .file-list {
+            margin-top: 15px;
+            list-style-type: none;
+            padding: 0;
+        }
+        .file-list li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-actions button {
+            background-color: #ff6f61;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            color: white;
+        }
+        .file-actions button:hover {
+            background-color: #e65c4d;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+    <script>
+        // Función para simular la subida de archivos
+        function uploadFile(event) {
+            event.preventDefault();
+            const fileInput = document.getElementById('file-input');
+            const fileName = fileInput.files[0]?.name;
+
+            if (fileName) {
+                const fileList = document.getElementById('file-list');
+                const newFile = document.createElement('li');
+                newFile.innerHTML = `
+                    ${fileName}
+                    <div class="file-actions">
+                        <button onclick="deleteFile(this)">Eliminar</button>
+                    </div>
+                `;
+                fileList.appendChild(newFile);
+                fileInput.value = ''; // Limpiar el input de archivo después de subir
+            } else {
+                alert('Por favor selecciona un archivo.');
+            }
+        }
+
+        // Función para eliminar un archivo
+        function deleteFile(button) {
+            const fileItem = button.parentElement.parentElement;
+            fileItem.remove();
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Panel de Control del Profesor</h1>
+    </header>
+
+    <div class="container">
+        <!-- Sección para subir materiales -->
+        <div class="section">
+            <h2>Subir Materiales</h2>
+            <div class="file-upload">
+                <input type="file" id="file-input">
+                <button onclick="uploadFile(event)">Subir Archivo</button>
+            </div>
+        </div>
+
+        <!-- Sección para ver materiales subidos -->
+        <div class="section">
+            <h2>Materiales Subidos</h2>
+            <ul class="file-list" id="file-list">
+                <!-- Los archivos subidos aparecerán aquí -->
+            </ul>
+        </div>
+
+        <!-- Otras herramientas -->
+        <div class="section">
+            <h2>Otras Herramientas</h2>
+            <p>Aquí puedes agregar otras herramientas como notas, comentarios, etc.</p>
+            <textarea rows="4" cols="50" placeholder="Escribe tus notas aquí..."></textarea><br><br>
+            <button>Guardar Notas</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Plataforma de Materiales para Profesores | Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas Complejas para Profesores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Encabezado rojo con logo y navegación */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #800000; /* Color rojo */
+            padding: 15px 30px;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        .logo span {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: #660000; /* Un tono más oscuro al pasar el mouse */
+        }
+
+        main {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            color: #800000;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        input[type="text"], input[type="number"], textarea, select {
+            padding: 0.5rem;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 0.5rem;
+        }
+
+        button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #800000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #660000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #800000;
+            color: white;
+        }
+
+        .result, .success-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='media/logo-FISI.png') }}" alt="Logo de la Facultad">
+            <span>FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{{url_for('home_profesor')}}">Inicio</a>
+            <a href="{{url_for('horarios')}}">Gestion de horarios</a>
+            <a href="{{url_for('reclamos1')}}">Reclamo</a>
+            <a href="{{url_for('perfil_profesor')}}">Perfil</a>
+            <a href="{{url_for('herramientas')}}">Herramientas</a>
+            <a href="{{url_for('reportes')}}">Proyectos</a>
+            <a href="{{url_for('login')}}">Salir</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Generador de Reportes -->
+        <section>
+            <h2>Generador de Reportes</h2>
+            <p>Genera reportes detallados sobre el desempeño de tus estudiantes.</p>
+            <label for="student-name-report">Nombre del estudiante:</label>
+            <input type="text" id="student-name-report" placeholder="Ejemplo: Juan Pérez">
+
+            <label for="performance">Desempeño (en porcentaje):</label>
+            <input type="number" id="performance" placeholder="Ejemplo: 85">
+
+            <label for="comments">Comentarios:</label>
+            <textarea id="comments" rows="4" placeholder="Detalles sobre el desempeño"></textarea>
+
+            <button onclick="generateReport()">Generar Reporte</button>
+            <div id="report-result" class="result"></div>
+        </section>
+
+        <!-- Sistema de Evaluación de Proyectos -->
+        <section>
+            <h2>Sistema de Evaluación de Proyectos</h2>
+            <p>Evalúa proyectos grupales asignando criterios y notas.</p>
+            <label for="project-title">Título del proyecto:</label>
+            <input type="text" id="project-title" placeholder="Ejemplo: Desarrollo de un sistema web">
+
+            <label for="group-members">Integrantes del grupo (separados por comas):</label>
+            <textarea id="group-members" rows="2" placeholder="Ejemplo: Juan, María, Pedro"></textarea>
+
+            <label for="criterion1">Criterio 1 (Ejemplo: Innovación):</label>
+            <input type="number" id="criterion1" placeholder="Nota (0-10)">
+
+            <label for="criterion2">Criterio 2 (Ejemplo: Presentación):</label>
+            <input type="number" id="criterion2" placeholder="Nota (0-10)">
+
+            <label for="criterion3">Criterio 3 (Ejemplo: Impacto):</label>
+            <input type="number" id="criterion3" placeholder="Nota (0-10)">
+
+            <button onclick="evaluateProject()">Evaluar Proyecto</button>
+            <div id="evaluation-result" class="result"></div>
+        </section>
+
+        <!-- Gestor de Grupos y Colaboración -->
+        <section>
+            <h2>Gestor de Grupos y Colaboración</h2>
+            <p>Crea y organiza grupos de trabajo.</p>
+            <label for="group-name">Nombre del grupo:</label>
+            <input type="text" id="group-name" placeholder="Ejemplo: Grupo A">
+
+            <label for="group-members-collab">Integrantes del grupo (separados por comas):</label>
+            <textarea id="group-members-collab" rows="2" placeholder="Ejemplo: Juan, María, Pedro"></textarea>
+
+            <button onclick="createGroup()">Crear Grupo</button>
+            <table id="group-table">
+                <thead>
+                    <tr>
+                        <th>Grupo</th>
+                        <th>Integrantes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script>
+        // Generador de Reportes
+        function generateReport() {
+            const name = document.getElementById("student-name-report").value.trim();
+            const performance = document.getElementById("performance").value.trim();
+            const comments = document.getElementById("comments").value.trim();
+
+            if (!name || !performance || !comments) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            const report = `
+                <h3>Reporte para ${name}</h3>
+                <p><strong>Desempeño:</strong> ${performance}%</p>
+                <p><strong>Comentarios:</strong> ${comments}</p>
+            `;
+            document.getElementById("report-result").innerHTML = report;
+
+            document.getElementById("student-name-report").value = "";
+            document.getElementById("performance").value = "";
+            document.getElementById("comments").value = "";
+        }
+
+        // Sistema de Evaluación de Proyectos
+        function evaluateProject() {
+            const title = document.getElementById("project-title").value.trim();
+            const members = document.getElementById("group-members").value.trim();
+            const criterion1 = parseFloat(document.getElementById("criterion1").value.trim());
+            const criterion2 = parseFloat(document.getElementById("criterion2").value.trim());
+            const criterion3 = parseFloat(document.getElementById("criterion3").value.trim());
+
+            if (!title || !members || isNaN(criterion1) || isNaN(criterion2) || isNaN(criterion3)) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            const totalScore = criterion1 + criterion2 + criterion3;
+            const evaluation = `
+                <h3>Evaluación del Proyecto: ${title}</h3>
+                <p><strong>Integrantes:</strong> ${members}</p>
+                <p><strong>Puntaje Total:</strong> ${totalScore} / 30</p>
+            `;
+            document.getElementById("evaluation-result").innerHTML = evaluation;
+
+            document.getElementById("project-title").value = "";
+            document.getElementById("group-members").value = "";
+            document.getElementById("criterion1").value = "";
+            document.getElementById("criterion2").value = "";
+            document.getElementById("criterion3").value = "";
+        }
+
+        // Gestor de Grupos y Colaboración
+        function createGroup() {
+            const groupName = document.getElementById("group-name").value.trim();
+            const members = document.getElementById("group-members-collab").value.trim();
+
+            if (!groupName || !members) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            const tableBody = document.querySelector("#group-table tbody");
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `<td>${groupName}</td><td>${members}</td>`;
+            tableBody.appendChild(newRow);
+
+            document.getElementById("group-name").value = "";
+            document.getElementById("group-members-collab").value = "";
+        }
+    </script>
+</body>
+</html>

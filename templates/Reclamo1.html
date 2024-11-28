@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Quejas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Encabezado rojo con logo y navegación */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #800000; /* Color rojo */
+            padding: 10px 20px;
+            color: white;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .logo span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .nav-links a:hover {
+            background-color: #660000; /* Un tono más oscuro al pasar el mouse */
+        }
+
+        /* Contenedor principal */
+        main {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para el formulario */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            background: #800000; /* Color rojo */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover {
+            background: #660000; /* Un tono más oscuro */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabecera Roja con Logo y Navegación -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='media/logo-FISI.png') }}" alt="Logo de la Facultad">
+            <span>FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{{url_for('home_profesor')}}">Inicio</a>
+            <a href="{{url_for('horarios')}}">Gestion de horarios</a>
+            <a href="{{url_for('reclamos1')}}">Reclamo</a>
+            <a href="{{url_for('perfil_profesor')}}">Perfil</a>
+            <a href="{{url_for('herramientas')}}">Herramientas</a>
+            <a href="{{url_for('reportes')}}">Proyectos</a>
+            <a href="{{url_for('login')}}">Salir</a>
+        </nav>
+    </header>
+
+    <!-- Contenedor del formulario de quejas -->
+    <main>
+        <h2>Formulario de Quejas</h2>
+        <p>Por favor, completa el siguiente formulario para enviar tu queja.</p>
+
+        <form action="/enviar_queja" method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo">Tipo de Queja</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="académica">Académica</option>
+                    <option value="administrativa">Administrativa</option>
+                    <option value="infraestructura">Infraestructura</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="detalle">Detalles de la Queja</label>
+                <textarea id="detalle" name="detalle" rows="5" required></textarea>
+            </div>
+
+            <button type="submit">Enviar Queja</button>
+        </form>
+    </main>
+
+</body>
+</html>

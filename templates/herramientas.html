@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas para Profesores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Encabezado */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #800000;
+            padding: 1rem 2rem;
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo span {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #660000;
+        }
+
+        main {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            color: #800000;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        input[type="number"], textarea {
+            padding: 0.5rem;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 0.5rem;
+        }
+
+        button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #800000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #660000;
+        }
+
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #800000;
+            color: white;
+        }
+
+        .submit-success {
+            margin-top: 1rem;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='media/logo-FISI.png') }}" alt="Logo de la Facultad">
+            <span>FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{{url_for('home_profesor')}}">Inicio</a>
+            <a href="{{url_for('horarios')}}">Gestion de horarios</a>
+            <a href="{{url_for('reclamos1')}}">Reclamo</a>
+            <a href="{{url_for('perfil_profesor')}}">Perfil</a>
+            <a href="{{url_for('herramientas')}}">Herramientas</a>
+            <a href="{{url_for('reportes')}}">Proyectos</a>
+            <a href="{{url_for('login')}}">Salir</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Simulador de Calificaciones -->
+        <section>
+            <h2>Simulador de Calificaciones</h2>
+            <p>Calcula la calificación final de un estudiante basado en criterios personalizados.</p>
+            <label for="criteria1">Criterio 1 (porcentaje):</label>
+            <input type="number" id="criteria1" placeholder="Ejemplo: 20 (20%)">
+
+            <label for="criteria1Grade">Nota del estudiante para el Criterio 1:</label>
+            <input type="number" id="criteria1Grade" placeholder="Ejemplo: 16">
+
+            <label for="criteria2">Criterio 2 (porcentaje):</label>
+            <input type="number" id="criteria2" placeholder="Ejemplo: 30 (30%)">
+
+            <label for="criteria2Grade">Nota del estudiante para el Criterio 2:</label>
+            <input type="number" id="criteria2Grade" placeholder="Ejemplo: 18">
+
+            <label for="criteria3">Criterio 3 (porcentaje):</label>
+            <input type="number" id="criteria3" placeholder="Ejemplo: 50 (50%)">
+
+            <label for="criteria3Grade">Nota del estudiante para el Criterio 3:</label>
+            <input type="number" id="criteria3Grade" placeholder="Ejemplo: 14">
+
+            <button onclick="calculateFinalGrade()">Calcular Nota Final</button>
+            <div id="final-grade-result" class="result"></div>
+        </section>
+
+        <!-- Planificador de Actividades -->
+        <section>
+            <h2>Planificador de Actividades</h2>
+            <p>Organiza las actividades de la semana.</p>
+            <form id="planner-form">
+                <label for="activity">Descripción de la actividad:</label>
+                <textarea id="activity" rows="4" placeholder="Ejemplo: Clase sobre trigonometría."></textarea>
+
+                <label for="date">Fecha de la actividad:</label>
+                <input type="date" id="date">
+
+                <button type="button" onclick="addActivity()">Agregar Actividad</button>
+            </form>
+            <table id="planner-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Actividad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Encuesta de Retroalimentación -->
+        <section>
+            <h2>Encuesta para Estudiantes</h2>
+            <p>Recolecta opiniones de los estudiantes sobre la clase o materia.</p>
+            <form id="survey-form">
+                <label>¿Qué tan satisfecho estás con las clases impartidas?</label>
+                <select id="satisfaction">
+                    <option value="Muy satisfecho">Muy satisfecho</option>
+                    <option value="Satisfecho">Satisfecho</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Insatisfecho">Insatisfecho</option>
+                    <option value="Muy insatisfecho">Muy insatisfecho</option>
+                </select>
+
+                <label>Comentarios o sugerencias:</label>
+                <textarea id="feedback" rows="4" placeholder="Escribe tus comentarios aquí"></textarea>
+
+                <button type="button" onclick="submitSurvey()">Enviar Encuesta</button>
+                <div id="survey-success" class="submit-success"></div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Simulador de Calificaciones
+        function calculateFinalGrade() {
+            const criteria1 = parseFloat(document.getElementById("criteria1").value);
+            const criteria1Grade = parseFloat(document.getElementById("criteria1Grade").value);
+            const criteria2 = parseFloat(document.getElementById("criteria2").value);
+            const criteria2Grade = parseFloat(document.getElementById("criteria2Grade").value);
+            const criteria3 = parseFloat(document.getElementById("criteria3").value);
+            const criteria3Grade = parseFloat(document.getElementById("criteria3Grade").value);
+
+            if (isNaN(criteria1) || isNaN(criteria1Grade) || isNaN(criteria2) || isNaN(criteria2Grade) || isNaN(criteria3) || isNaN(criteria3Grade)) {
+                document.getElementById("final-grade-result").innerHTML = "Por favor, completa todos los campos.";
+                return;
+            }
+
+            const finalGrade = (criteria1 * criteria1Grade / 100) + (criteria2 * criteria2Grade / 100) + (criteria3 * criteria3Grade / 100);
+            document.getElementById("final-grade-result").innerHTML = `La calificación final es: ${finalGrade.toFixed(2)}`;
+        }
+
+        // Planificador de Actividades
+        function addActivity() {
+            const activity = document.getElementById("activity").value.trim();
+            const date = document.getElementById("date").value;
+
+            if (!activity || !date) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            const tableBody = document.querySelector("#planner-table tbody");
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `<td>${date}</td><td>${activity}</td>`;
+            tableBody.appendChild(newRow);
+
+            document.getElementById("planner-form").reset();
+        }
+
+        // Encuesta
+        function submitSurvey() {
+            const satisfaction = document.getElementById("satisfaction").value;
+            const feedback = document.getElementById("feedback").value.trim();
+
+            if (!feedback) {
+                document.getElementById("survey-success").innerHTML = "Por favor, completa los comentarios.";
+                return;
+            }
+
+            document.getElementById("survey-success").innerHTML = "¡Gracias por completar la encuesta!";
+            document.getElementById("survey-form").reset();
+        }
+    </script>
+</body>
+</html>
