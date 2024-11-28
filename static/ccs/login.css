@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: Poppins;
+}
+
+.background-media {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.background-media__img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100vw;
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+}
+
+@media (min-aspect-ratio:16/9){
+    .background-media__img{
+        width:100%;
+        height:auto;
+    }
+}
+
+@media (max-aspect-ratio:16/9){
+    .background-media__img{
+        width:auto;
+        height:100%;
+    }
+}
+
+.forms-container{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+/*FORMS*/
+.forms{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /*align-items: center;*/
+    flex-wrap: nowrap;
+    /*width: 400px;*/
+    max-height: 82vh;
+    padding: 1rem;
+    background: rgba(80, 80, 80, 0.15);
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0px 25px 45px 5px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(100, 100, 100, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.forms__logo{
+    width: 35%;
+    margin-inline: auto; /*para q se centre*/
+}
+
+.forms__logo__img{
+    width: 100%;
+}
+
+.forms-content{
+    /*width: 80%;*/
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-grow: 1;
+}
+
+.forms__user-type{
+    width: 100%;
+    margin-block: 5px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.forms__user-type__docente,.forms__user-type__estudiante{
+    padding-inline:0.5rem
+}
+
+.forms__user,.forms__password{
+    width: 100%;
+}
+.forms__user__input,.forms__user__password{
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+
+.forms__submmit{
+    width: 100%;
+}
+.forms__submmit__button{
+    width: 100%;
+    margin-block: 1rem;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: rgb(128, 0, 0);
+    font-weight: bolder;
+}
+
+.forms__forgot-password__link{
+    color: white;
+    text-decoration: underline;
+}
+
+@media only screen and (max-height: 32rem) { 
+    .forms{ 
+        display: flex;
+        flex-direction: row; /*Importante, para que se muestre uno al lado del otro*/
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+    .forms__logo{
+        padding-inline: 0.5rem 1rem;
+    }
+}
